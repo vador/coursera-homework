@@ -17,15 +17,16 @@ for iter = 1:num_iters
     %       of the cost function (computeCostMulti) and gradient here.
     %
 
-
-
-
-
-
-
-
-
-
+    % initialize gradient storage 
+    g = zeros(size(theta));
+    
+    % gradient calculation
+    for i = 1 : length(g)
+        g(i) = sum((X * theta - y) .* X(:, i)) / m;
+    end
+    
+    % update theta
+    theta = theta - g .* alpha;
 
     % ============================================================
 
