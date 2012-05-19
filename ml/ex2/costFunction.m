@@ -20,12 +20,14 @@ grad = zeros(size(theta));
 % Note: grad should have the same dimensions as theta
 %
 
+% prediction
+hX = sigmoid(X * theta);
 
+% cost
+J = sum(-y .* log(hX) - (-y + 1) .* log(-hX + 1)) / m;
 
-
-
-
-
+% gradient
+grad = sum(repmat(hX - y, [1 size(X, 2)]) .* X) ./ m;
 
 % =============================================================
 
