@@ -36,14 +36,16 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+% prediction
+hX = sigmoid(X * theta);
 
+% Cost
+J = sum(-y .* log(hX) - (-y + 1) .* log(-hX + 1)) / m; 
+J = J + sum(theta(2:end).^2) * lambda / 2 / m;  % regularization term
 
-
-
-
-
-
-
+% gradient
+grad = sum(repmat(hX - y, [1 size(X, 2)]) .* X) ./ m;
+grad(2 : end) = grad(2 : end) + theta(2 : end)' .* lambda ./m;
 
 % =============================================================
 
