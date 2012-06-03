@@ -62,23 +62,29 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% forward propagation
+X = [ones(m, 1) X];
+z2 = X * Theta1';
+a2 = sigmoid(z2);
+a2 = [ones(m, 1) a2];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
+% vectorize y
+yv = zeros(m, num_labels);
+for i = 1 : num_labels
+    yv(y==i, i) = 1;
+end
+% cose
+J = sum(sum(-yv .* log(a3) - (-yv+1) .* log(-a3+1))) / m;
 
+% regularization
+J = J + (sum(sum(Theta1(:, 2:end).^2)) + sum(sum(Theta2(:, 2:end).^2))) * lambda / 2 / m;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% back propagation
+t3 = a3 - yv;
+t2 = t3 * Theta2(:, 2:end) .* sigmoidGradient(z2);
+Theta2_grad = t3' * a2 / m + [zeros(size(Theta2, 1), 1) Theta2(:, 2:end) .* lambda] / m;
+Theta1_grad = t2' * X / m + [zeros(size(Theta1, 1), 1) Theta1(:, 2:end) .* lambda] / m;
 
 % -------------------------------------------------------------
 
