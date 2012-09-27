@@ -20,15 +20,16 @@ grad = zeros(size(theta));
 %
 
 
+% prediction
+hX = X * theta;
 
+% Cost
+J = sum((hX - y) .^ 2) / 2 / m; 
+J = J + sum(theta(2:end).^2) * lambda / 2 / m;  % regularization term
 
-
-
-
-
-
-
-
+% % gradient
+grad = sum(repmat(hX - y, [1 size(X, 2)]) .* X, 1) ./ m;
+grad(2 : end) = grad(2 : end) + theta(2 : end)' .* lambda ./m;
 
 % =========================================================================
 
