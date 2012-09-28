@@ -8,6 +8,10 @@ function word_indices = processEmail(email_contents)
 
 % Load Vocabulary
 vocabList = getVocabList();
+vocabMap = containers.Map();
+for i = 1 : length(vocabList)
+    vocabMap(vocabList{i}) = i;
+end
 
 % Init return value
 word_indices = [];
@@ -97,13 +101,9 @@ while ~isempty(email_contents)
     %       str2). It will return 1 only if the two strings are equivalent.
     %
 
-
-
-
-
-
-
-
+    if isKey(vocabMap, str)
+        word_indices = [word_indices vocabMap(str)];
+    end
 
 
     % =============================================================

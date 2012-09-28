@@ -23,11 +23,22 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+C_can = [0.01 0.03 0.1 0.3 1 3 10 30];
+sigma_can = [0.01 0.03 0.1 0.3 1 3 10 30];
 
+score = zeros(length(C_can), length(sigma_can));
 
+for i = 1 : length(C_can)
+    for j = 1 : length(sigma_can)
+        model= svmTrain(X, y, C_can(i), @(x1, x2) gaussianKernel(x1, x2, sigma_can(j)));
+        yval_pred = svmPredict(model, Xval);
+        score(i, j) = sum(yval_pred == yval);
+    end
+end
 
-
-
+[vall, indd] = max2(score);
+C = C_can(indd(1));
+sigma = sigma_can(indd(2));
 
 % =========================================================================
 
