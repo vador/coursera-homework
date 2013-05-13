@@ -1,0 +1,3 @@
+[submodule "datasci"]
+	path = datasci
+	url = https://github.com/fanxu/datasci_course_materials.git
